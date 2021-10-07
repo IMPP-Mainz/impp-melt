@@ -88,15 +88,15 @@ Please note that some labels appear more than once in the vector. In this way we
                 #{"Pollen Allergy" "Hay Fever" "Flu" "Cold"} 90,
                 #{"Pollen Allergy" "Flu" "Asthma"} 810},
    :cooccurrence {#{"Asthma" "Flu"} 4048,
-                 #{"Cold" "Flu"} 1870,
-                 #{"Flu" "Hay Fever"} 1875,
-                 #{"Pollen Allergy" "Flu"} 1882,
-                 #{"Pollen Allergy" "Asthma"} 2417,
-                 #{"Asthma" "Cold"} 2371,
-                 #{"Cold" "Hay Fever"} 1092,
-                 #{"Asthma" "Hay Fever"} 2350,
-                 #{"Pollen Allergy" "Cold"} 1063,
-                 #{"Pollen Allergy" "Hay Fever"} 1124}}
+                  #{"Cold" "Flu"} 1870,
+                  #{"Flu" "Hay Fever"} 1875,
+                  #{"Pollen Allergy" "Flu"} 1882,
+                  #{"Pollen Allergy" "Asthma"} 2417,
+                  #{"Asthma" "Cold"} 2371,
+                  #{"Cold" "Hay Fever"} 1092,
+                  #{"Asthma" "Hay Fever"} 2350,
+                  #{"Pollen Allergy" "Cold"} 1063,
+                  #{"Pollen Allergy" "Hay Fever"} 1124}}
 ```
 ### Cardinality and median
 Cardinality (``:CARD``) is the average number of labels per instance where the ``:MEDIAN`` is the median number of labels per instances.
@@ -106,19 +106,21 @@ In the example above the examples have on average 2.2784 labels and 50% of the e
 Density (``:DENS``) is the cardinality divided by the number of labels and thus a normalised representation of the cardinality.
 The smaller the value, the greater the distribution of the labels in the examples.
 
-### P-min
+### Percentage of instances with one label (P-min)
 ``:P-min`` ist the percentage of instances with only one label. In our case 33.77 % of the instances have only one label.
 
-### Imbalance Metrics
+### Imbalance Metrics 
+[1]](#1) presents some metrics for determining label imbalance, some of which have been implemented.
 
-#### IRLbl
-The ``:IRBLbl`` metric shows the imbalance of all labels to the label that occurs most in the set. It shows the imbalance of all labels to the label that occurs the most in the set. In our example, the label that occurs the most is "Asthma" which has a value of 1.0. Compared to the label "Pollen Allergy", "Asthma" occurs 2.081861012956419 times more often, which is why "Pollen Allergy" has a value of 2.081861012956419.
+#### Imbalance ratio per Label (IRLbl)
+The imbalance ratio per Label ``:IRBLbl`` metric shows the imbalance of all labels to the label that occurs most in the set. It shows the imbalance of all labels to the label that occurs the most in the set. In our example, the label that occurs the most is "Asthma" which has a value of 1.0. Compared to the label "Pollen Allergy", "Asthma" occurs 2.081861012956419 times more often, which is why "Pollen Allergy" has a value of 2.081861012956419.
 
-#### MaxIR, MeanIR and MedianIR
-``:MaxIR`` is the highest IRBbl value, in our example 2,111, and ``:MeanIR`` is the average IRLbl value. In our case it is 1.7125802486379436 and means that the label "Asthma" occurs on average 1.7125802486379436 times more often than the other labels.
-In addition, the ``:MedianIR`` is used, the median of IRLbl values, which in our case is 2.081861012956419 and means that for 50% of the labels "Asthma" occurs more than 2.081861012956419 times.
+#### Maximal imbalance ratio (MaxIR), mean imbalance ratio (MeanIR) and median imbalance ratio (MedianIR)
+These metrics are global assessment metrics for the imbalance of a dataset. Maximal imbalance ratio ``:MaxIR`` is the highest IRBbl value, in our example 2,111, and mean imbalance ratio ``:MeanIR`` is the average IRLbl value. In our case it is 1.7125802486379436 and means that the label "Asthma" occurs on average 1.7125802486379436 times more often than the other labels.
+In addition, the median imbalance ratio ``:MedianIR`` is used, the median of IRLbl values, which in our case is 2.081861012956419 and means that for 50% of the labels "Asthma" occurs more than 2.081861012956419 times.
 
-#### CVIR
+#### Coefficient of variation for the average imbalance ratio (CVIR)
+The coefficient of variation for the average imbalance ratio helps to identify whether a high ``MeanIR`` is caused by only some labels with extreme imbalance levels or many labels with a high IRLbl.
 
 #### Label diversity information
 The label diversity (``:label-diversity``) is the number of distinct label sets in the instances and ``:label-diversity-normalized`` is the normalized label diversity. The distinct label sets and their occurrence can be found in ``:label-sets``
@@ -138,26 +140,58 @@ The function ``calculate-label-correlation`` which calculates the [correlation](
               ["Flu" "Cold" "Asthma" "Hay Fever" "Pollen Allergy"]))
 => #'multi-labeling.test/result
 ```
-The return value is a map where ``:correlation`` contains the correlation values of the labels, 
+The return value is a map this the keys ``:correlation``, ``:label-order`` and ``:data``.
+``:correlation`` contains the correlation values of the labels in form of a 
 ```clojure
 (:correlation result)
 =>
-|       Pollen Allergy |            Hay Fever |                 Flu |               Asthma |                 Cold |
-|----------------------+----------------------+---------------------+----------------------+----------------------|
-|   1.0000000000000064 |  0.05472847803852112 | 0.07340770328829033 |   0.0661188325763262 |  0.05531814770886162 |
-|  0.05472847803852109 |   1.0000000000000704 | 0.06239259848296332 | 0.055907890308411264 | 0.053550669221362895 |
-|  0.07340770328829034 |  0.06239259848296332 |   1.000000000000056 |  0.07056754545478984 |  0.06218116789780056 |
-|   0.0661188325763262 |  0.05590789030841124 | 0.07056754545478984 |   0.9999999999999696 |  0.06855928308651629 |
-| 0.055318147708861606 | 0.053550669221362875 | 0.06218116789780054 |  0.06855928308651628 |   1.0000000000000209 |
+|                 Cold |                 Flu |              Asthma |       Pollen Allergy |           Hay Fever |
+|----------------------+---------------------+---------------------+----------------------+---------------------|
+|    1.000000000000124 | 0.06746869090503343 | 0.06248325486428463 | 0.059820852006081685 | 0.06674748894644558 |
+|  0.06746869090503346 |  0.9999999999998889 |  0.0634672888843792 |  0.06966581494550396 | 0.07505147414197517 |
+| 0.062483254864284604 |  0.0634672888843792 |  1.0000000000000973 |  0.06548332967125124 | 0.07293562890793891 |
+| 0.059820852006081664 | 0.06966581494550397 | 0.06548332967125124 |    1.000000000000135 | 0.07376733713512022 |
+|   0.0667474889464456 | 0.07505147414197519 | 0.07293562890793887 |  0.07376733713512024 |  0.9999999999999868 |
 ```
 > ☝️ Please note that the diagonal does not always have 1.0 as a number. This is due to floating point errors when calculating floating point numbers. For more information on this topic, please see [[2]](#2).
 
-``:label-order`` the information which label has which position in the correlation dataset
+The namespace ``multi-labeling.analyze`` also contains a convenient function ``dataset->map`` that converts a dataset into a map.
+```clojure
+(dataset->map (:correlation result))
+=>
+{"Cold"           {"Cold"           1.000000000000124,
+                   "Flu"            0.06746869090503346,
+                   "Asthma"         0.062483254864284604,
+                   "Pollen Allergy" 0.059820852006081664,
+                   "Hay Fever"      0.0667474889464456},
+ "Flu"            {"Cold"           0.06746869090503343,
+                   "Flu"            0.9999999999998889,
+                   "Asthma"         0.0634672888843792,
+                   "Pollen Allergy" 0.06966581494550397,
+                   "Hay Fever"      0.07505147414197519},
+ "Asthma"         {"Cold"           0.06248325486428463,
+                   "Flu"            0.0634672888843792,
+                   "Asthma"         1.0000000000000973,
+                   "Pollen Allergy" 0.06548332967125124,
+                   "Hay Fever"      0.07293562890793887},
+ "Pollen Allergy" {"Cold"           0.059820852006081685,
+                   "Flu"            0.06966581494550396,
+                   "Asthma"         0.06548332967125124,
+                   "Pollen Allergy" 1.000000000000135,
+                   "Hay Fever"      0.07376733713512024},
+ "Hay Fever"      {"Cold"           0.06674748894644558,
+                   "Flu"            0.07505147414197517,
+                   "Asthma"         0.07293562890793891,
+                   "Pollen Allergy" 0.07376733713512022,
+                   "Hay Fever"      0.9999999999999868}}
+```
+
+``:label-order`` is the information which label has which position in the correlation dataset
 ```clojure
 (:label-order result)
-=> {"Pollen Allergy" 0, "Hay Fever" 1, "Flu" 2, "Asthma" 3, "Cold" 4}
+=> {"Cold" 0, "Flu" 1, "Asthma" 2, "Pollen Allergy" 3, "Hay Fever" 4}
 ```
-and ``:data`` the label datasets which are used for the calculation.
+And ``:data`` the label datasets which are used for the calculation.
 ```clojure
 (:data result)
 =>
@@ -179,7 +213,7 @@ and ``:data`` the label datasets which are used for the calculation.
 ```
 
 ## N-Fold set creation
-The name space ``multi-labeling.n-fold-stratification`` is used to select test (and training) data for imbalanced multilabeled examples. The function ``iterative-stratification-n-fold`` is an implementation of the iterative stratification algorithm defines in  [[2]](#2). The function expects for the input parameters ``input-examples`` a collection of examples which are maps or map-like data objects which have the keys ``:id``, which contains a unique ID for the example, and the key ``:labels``, which has the labels of the example as value and for ``folds`` the number of folds. Boolean values can be passed as additional parameters for the keys ``:complete?``, ``include-testing`` and ``statistics?``. By default, it is assumed that all these additional parameters are ``false``.
+The name space ``multi-labeling.n-fold-stratification`` is used to select test (and training) data for imbalanced multilabeled examples. The function ``iterative-stratification-n-fold`` is an implementation of the iterative stratification algorithm defined in [[2]](#2). The function expects for the input parameters ``input-examples`` a collection of examples which are maps or map-like data objects which have the keys ``:id``, which contains a unique ID for the example, and the key ``:labels``, which has the labels of the example as value and for ``folds`` the number of folds. Boolean values can be passed as additional parameters for the keys ``:complete?``, ``include-testing?`` and ``statistics?``. By default, it is assumed that all these additional parameters are ``false``.
 
 By default, the function returns a map that has the fold number (starting with 0 to ``folds``-1) as a key and a map as a value that contains a collection of vectors for the ``:training`` key, where the first value is the ID of the example and the second are the labels for that example.
 
@@ -209,7 +243,7 @@ By default, the function returns a map that has the fold number (starting with 0
                  #{"Hay Fever" "Asthma" "Cold"}]}}}
 ```
 
-If ``:complete`` is ``true`` then the map will also have all the examples used to create it added under the key ``:complete``.
+If ``:complete?`` is ``true`` then the map will also have all the examples used to create it added under the key ``:complete``.
 
 ```clojure 
 (iterative-stratification-n-fold (generate-x-multiple-random-data 10 ["Flu" "Cold" "Asthma" "Hay Fever" "Pollen Allergy"] [1 3]) 2 :complete? true)
@@ -469,11 +503,7 @@ If ``:include-testing?`` equals ``true``, then the test data for each fold is al
                #{"Pollen Allergy" "Hay Fever" "Asthma"}]
               ["30b0c3141520787f0447bf5acab3bb6d6e382617e7f1fc6e9bf39916e164ff8c42d1195aa9062d8301b3cc98efa38d51980b9e74894125291f84454530238d56"
                #{"Hay Fever" "Flu" "Cold"}])}}
-
 ``` 
-
-
-
 
 ## References
 <a id="1">[1]</a>

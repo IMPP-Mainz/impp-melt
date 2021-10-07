@@ -55,7 +55,7 @@
                                      result (add-examples example-set S expected-examples-label-set (first selected-label-and-examples) (second selected-label-and-examples))]
                                  (recur (nth result 0) (nth result 1) (nth result 2)))))))
 
-(defn- get-examples-for-testing-set [input-examples training-examples]
+(defn get-examples-for-testing-set [input-examples training-examples]
   (let [training-ids (into #{} (map first training-examples))]
     (map #(vector (:id %1) (:labels %1)) (filter #(not (contains? training-ids (:id %1))) input-examples))))
 
@@ -81,3 +81,4 @@
       (calculate-n-fold-statistics input-examples folds (iterative-stratification-training-elements input-examples folds))
       (iterative-stratification-training-elements input-examples folds))
     )))
+

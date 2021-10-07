@@ -73,11 +73,16 @@
      :label-order (zipmap (DATASETS/column-names dataset) (range))
      }))
 
+(defn dataset->map [dataset]
+  (let [columns (DATASETS/column-names dataset)]
+    (apply merge (map #(hash-map (key %1) (zipmap columns (val %1))) (DATASETS/to-map dataset))
+           )))
+
 (defn save-label-correlation
   ([file-name label-colls labels]
-  (let [dataset (:correlation (calculate-label-correlation label-colls labels))]
-    (EXPORT/write-csv-file
-      (str file-name ".csv")
-      (concat [:name] (sort labels))
-      (map #(assoc %2 :name %1) (DATASETS/column-names dataset) (DATASETS/row-maps dataset))))))
+   (let [dataset (:correlation (calculate-label-correlation label-colls labels))]
+     (EXPORT/write-csv-file
+       (str file-name ".csv")
+       (concat [:name] (sort labels))
+       (map #(assoc %2 :name %1) (DATASETS/column-names dataset) (DATASETS/row-maps dataset))))))
 
