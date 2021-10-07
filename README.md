@@ -1,5 +1,5 @@
-# multi-labeling
-This project contains functions to gather statistical information about multi-labeld data and creating training- and testsets.
+# IMPP-MELT
+The IMPP Multi-Lableing Tool is a project to process multi labled data. 
 
 ## Preliminary information
 The code snippets used in this tutorial can be executed in the namespace ``multi-labeling.test``. This namespace contains all the needed dependencies to execute these code snippets. 
@@ -491,3 +491,4 @@ Sechidis, Konstantinos and Tsoumakas, Grigorios and Vlahavas, Ioannis. 2011. On 
 Copyright (C) 2021 Institut für medizinische und pharmazeutische Prüfungsfragen.
 Licensed under the [GNU General Public License 3](https://www.gnu.org/licenses/gpl-3.0.de.html).
 
+Please quote as: Núñez, A.; Lindner, M. (2021): <Endgültiger Name>, https://github.com/IMPP-Mainz/impp-melt, DOI: <DOI-Nummer>
