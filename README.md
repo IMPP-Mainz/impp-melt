@@ -521,4 +521,5 @@ Sechidis, Konstantinos and Tsoumakas, Grigorios and Vlahavas, Ioannis. 2011. On 
 Copyright (C) 2021 Institut für medizinische und pharmazeutische Prüfungsfragen.
 Licensed under the [GNU General Public License 3](https://www.gnu.org/licenses/gpl-3.0.de.html).
 
-Please quote as: Núñez, A.; Lindner, M. (2021): <Endgültiger Name>, https://github.com/IMPP-Mainz/impp-melt, DOI: <DOI-Nummer>
+Please quote as: Núñez, A.; Lindner, M. (2022): Multi-Labeling Tool, https://github.com/IMPP-Mainz/impp-melt, DOI: [![DOI](https://zenodo.org/badge/414500661.svg)](https://zenodo.org/badge/latestdoi/414500661)
+
