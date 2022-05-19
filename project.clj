@@ -1,4 +1,4 @@
-(defproject impp-melt "0.1.0-SNAPSHOT"
+(defproject impp-melt "0.1"
   :description "Utility functions to use in a multi labeling environment."
   :url "http://example.com/FIXME"
   :license {:name "GPL-3.0"
