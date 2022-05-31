@@ -6,11 +6,12 @@
             :comment "GNU General Public License v3.0"
             :year 2021
             :key "gpl-3.0"}
-  :authors [{:name  "Alexandra Núñez"
-             :email "anunez@impp.de"}
-            {:name  "Marcus Lindner"
-             :email "mlindner@impp.de"}
-            ]
+ :authors [{:name   "Alexandra Núñez"
+             :github "AlexaKekin"
+             :email  ["anunez@impp.de" "anunyes@gmail.com"]}
+            {:name   "Marcus Lindner"
+             :github "Goldritter"
+             :email  ["mlindner@impp.de" "marcus.goldritter.lindner@gmail.com"]}]
 
   :dependencies [
                  ;; Core dependencies
