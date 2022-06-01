@@ -6,7 +6,7 @@ The code snippets used in this tutorial can be executed in the namespace ``multi
 
 ## Creating random data examples
 With the function ``generate-x-multiple-random-data`` in the namespace ``util.test-data`` allows it to create randomly a specified number of randomly labeled elements which have a field ``:id`` and ``:labels``.
-The field ``:id`` is used to identify the elements and is unique and the field ``:labales`` contains a set of labels for this element. 
+The field ``:id`` is used to identify the elements and is unique and the field ``:lables`` contains a set of labels for this element. 
 The parameter ``x`` defines the number of elements which are generated, ``labels`` the labels from which the function can choose and ``size-range`` defines how many labels should be selected.  
 
 The following code is an example where 4 labeled elements should be created with either 1 or 3 labels selected from "Flu", "Cold", "Asthma", "Hay Fever" or "Pollen Allergy"   
@@ -140,7 +140,7 @@ The function ``calculate-label-correlation`` which calculates the [correlation](
               ["Flu" "Cold" "Asthma" "Hay Fever" "Pollen Allergy"]))
 => #'multi-labeling.test/result
 ```
-The return value is a map this the keys ``:correlation``, ``:label-order`` and ``:data``.
+The return value is a map with the keys ``:correlation``, ``:label-order`` and ``:data``.
 ``:correlation`` contains the correlation values of the labels in form of a 
 ```clojure
 (:correlation result)
